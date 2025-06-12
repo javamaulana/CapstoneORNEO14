@@ -7,9 +7,7 @@ import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -23,7 +21,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.currencyconverterpro.ui.AppEventManager
 import com.example.currencyconverterpro.ui.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 sealed class BottomBarScreen(
     val route: String,
@@ -48,13 +49,24 @@ fun MainScreen(mainNavController: NavHostController) {
     val navController = rememberNavController()
     val factory = ViewModelFactory(LocalContext.current)
 
-    // ViewModel dibuat sekali di sini untuk dibagikan ke semua layar di dalam NavHost ini
     val converterViewModel: ConverterViewModel = viewModel(factory = factory)
     val favoritesViewModel: FavoritesViewModel = viewModel(factory = factory)
     val profileViewModel: ProfileViewModel = viewModel(factory = factory)
     val detailViewModel: CurrencyDetailViewModel = viewModel(factory = factory)
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
+        AppEventManager.snackbarMessages.collectLatest { message ->
+            scope.launch {
+                snackbarHostState.showSnackbar(message)
+            }
+        }
+    }
+
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()

@@ -1,6 +1,5 @@
 package com.example.currencyconverterpro.ui.main
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -19,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -37,6 +35,7 @@ fun ConverterScreen(
     fromArg: String?,
     toArg: String?
 ) {
+    // State diambil sepenuhnya dari ViewModel untuk memastikan persistensi
     val currencies by viewModel.currencies.collectAsState()
     val conversionResultData by viewModel.conversionResult.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -47,30 +46,27 @@ fun ConverterScreen(
     val largeNumberFormatter = remember { DecimalFormat("#,##0.0", DecimalFormatSymbols(Locale("in", "ID"))) }
     val smallNumberFormatter = remember { DecimalFormat("#,##0.00000", DecimalFormatSymbols(Locale("in", "ID"))) }
 
+    // Animasi untuk angka hasil konversi
     val animatedAmount by animateFloatAsState(
         targetValue = (conversionResultData?.totalAmount ?: 0.0).toFloat(),
         animationSpec = tween(durationMillis = 800), label = "amountAnimation"
     )
 
+    // Efek ini hanya berjalan saat ada data baru dari halaman favorit
     LaunchedEffect(key1 = fromArg, key2 = toArg) {
         if (fromArg != null && toArg != null) {
             viewModel.updateFromFavorite(fromArg, toArg)
         }
     }
 
-    val context = LocalContext.current
-    LaunchedEffect(Unit) {
-        viewModel.toastMessage.collect { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
+    // Halaman Utama (Home Screen).
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Kolom konten utama yang bisa di-scroll
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -80,6 +76,7 @@ fun ConverterScreen(
             Text("Konversi Mata Uang", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(24.dp))
 
+            // Kartu untuk input
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     OutlinedTextField(
@@ -101,6 +98,7 @@ fun ConverterScreen(
                 }
             }
 
+            // Tombol Tukar
             Box(modifier = Modifier.padding(vertical = 8.dp)) {
                 FilledIconButton(
                     onClick = { viewModel.onSwapCurrencies() },
@@ -110,13 +108,16 @@ fun ConverterScreen(
                 }
             }
 
+            // Kartu untuk output hasil konversi
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     CurrencyDropdown(
@@ -130,6 +131,7 @@ fun ConverterScreen(
                     if (isLoading && conversionResultData == null) {
                         CircularProgressIndicator(modifier = Modifier.padding(vertical = 48.dp))
                     } else {
+                        // Menampilkan hasil konversi dari API.
                         val formattedTotalAmount = largeNumberFormatter.format(animatedAmount)
                         val adaptiveFontSize = when {
                             formattedTotalAmount.length > 15 -> 32.sp
@@ -160,17 +162,8 @@ fun ConverterScreen(
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                         verticalArrangement = Arrangement.spacedBy(8.dp)
                                     ) {
-                                        Text(
-                                            text = "1 $fromCurrency = ${largeNumberFormatter.format(result.unitRate)} $toCurrency",
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            textAlign = TextAlign.Center
-                                        )
-                                        Text(
-                                            text = "1 $toCurrency = ${smallNumberFormatter.format(result.inverseUnitRate)} $fromCurrency",
-                                            style = MaterialTheme.typography.bodyMedium,
-                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                            textAlign = TextAlign.Center
-                                        )
+                                        Text(text = "1 $fromCurrency = ${largeNumberFormatter.format(result.unitRate)} $toCurrency", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+                                        Text(text = "1 $toCurrency = ${smallNumberFormatter.format(result.inverseUnitRate)} $fromCurrency", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
                                     }
                                 }
                             }
@@ -181,6 +174,7 @@ fun ConverterScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
 
+        // Tombol aksi di bagian bawah
         TextButton(onClick = { viewModel.addFavorite() }) {
             Icon(Icons.Default.FavoriteBorder, contentDescription = "Favorit", modifier = Modifier.size(18.dp))
             Spacer(modifier = Modifier.width(8.dp))

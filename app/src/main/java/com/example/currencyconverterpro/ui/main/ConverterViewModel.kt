@@ -7,11 +7,9 @@ import com.example.currencyconverterpro.data.api.RetrofitInstance
 import com.example.currencyconverterpro.data.db.FavoriteDao
 import com.example.currencyconverterpro.data.db.FavoritePair
 import com.example.currencyconverterpro.data.preferences.SessionManager
-import kotlinx.coroutines.flow.MutableSharedFlow
+import com.example.currencyconverterpro.ui.AppEventManager
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -34,9 +32,6 @@ class ConverterViewModel(
 
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
-
-    private val _toastMessage = MutableSharedFlow<String>()
-    val toastMessage: SharedFlow<String> = _toastMessage.asSharedFlow()
 
     private var currentUserId: Int? = null
 
@@ -110,10 +105,11 @@ class ConverterViewModel(
                 if (response.isSuccessful) {
                     _currencies.value = response.body() ?: emptyMap()
                 } else {
-                    _toastMessage.emit("Gagal memuat daftar mata uang.")
+                    AppEventManager.showSnackbar("Gagal memuat daftar mata uang.")
                 }
             } catch (e: Exception) {
-                _toastMessage.emit("Gagal memuat daftar mata uang.")
+                AppEventManager.showSnackbar("Gagal memuat daftar mata uang.")
+                Log.e("ConverterVM", "fetchCurrencies error: ${e.message}")
             } finally {
                 _isLoading.value = false
             }
@@ -126,12 +122,12 @@ class ConverterViewModel(
         val amountStr = _amount.value
 
         if (from.isBlank() || to.isBlank()) {
-            viewModelScope.launch { _toastMessage.emit("Pilih mata uang 'Dari' dan 'Ke'.") }
+            viewModelScope.launch { AppEventManager.showSnackbar("Pilih mata uang 'Dari' dan 'Ke'.") }
             return
         }
         val amountDouble = amountStr.toDoubleOrNull()
         if (amountDouble == null || amountDouble <= 0) {
-            viewModelScope.launch { _toastMessage.emit("Jumlah harus angka dan lebih dari 0.") }
+            viewModelScope.launch { AppEventManager.showSnackbar("Jumlah harus angka dan lebih dari 0.") }
             return
         }
 
@@ -150,11 +146,11 @@ class ConverterViewModel(
                                 unitRate = unitRate,
                                 inverseUnitRate = inverseRate
                             )
-                        } else { _toastMessage.emit("Gagal mendapatkan rate untuk $to.") }
-                    } ?: run { _toastMessage.emit("Respons dari server kosong.") }
-                } else { _toastMessage.emit("Gagal: Error ${response.code()}") }
+                        } else { AppEventManager.showSnackbar("Gagal mendapatkan rate untuk $to.") }
+                    } ?: run { AppEventManager.showSnackbar("Respons dari server kosong.") }
+                } else { AppEventManager.showSnackbar("Gagal: Error ${response.code()}") }
             } catch (e: Exception) {
-                _toastMessage.emit("Error: Periksa koneksi internet.")
+                AppEventManager.showSnackbar("Error: Periksa koneksi internet.")
             } finally {
                 _isLoading.value = false
             }
@@ -170,9 +166,9 @@ class ConverterViewModel(
                 val existingFavorite = favoriteDao.isFavoriteExist(userId, from, to)
                 if (existingFavorite == null) {
                     favoriteDao.addFavorite(FavoritePair(userId = userId, fromCurrency = from, toCurrency = to))
-                    _toastMessage.emit("Berhasil ditambahkan ke favorit!")
+                    AppEventManager.showSnackbar("Berhasil ditambahkan ke favorit!")
                 } else {
-                    _toastMessage.emit("Pasangan mata uang ini sudah ada di favorit.")
+                    AppEventManager.showSnackbar("Pasangan mata uang ini sudah ada di favorit.")
                 }
             }
         }
