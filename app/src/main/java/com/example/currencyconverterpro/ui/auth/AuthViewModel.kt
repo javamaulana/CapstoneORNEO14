@@ -41,7 +41,7 @@ class AuthViewModel(
 
             // Validasi tidak boleh kosong
             if (trimmedName.isBlank() || trimmedEmail.isBlank() || trimmedPassword.isBlank() || gender.isBlank()) {
-                _authState.value = AuthState.Error("Semua field harus diisi.")
+                _authState.value = AuthState.Error("Semua bagian harus diisi.")
                 return@launch
             }
 
