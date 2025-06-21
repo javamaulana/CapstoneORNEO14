@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.currencyconverterpro.ui.navigation.Routes
 
 @Composable
 fun RegisterScreen(navController: NavController, viewModel: AuthViewModel) {
@@ -35,7 +36,7 @@ fun RegisterScreen(navController: NavController, viewModel: AuthViewModel) {
                 // <-- 2. Ganti Toast dengan Snackbar
                 snackbarHostState.showSnackbar(
                     message = "Registrasi berhasil! Silakan login.",
-                    duration = SnackbarDuration.Long // Durasi panjang agar pesan sempat terbaca
+                    duration = SnackbarDuration.Short
                 )
                 navController.popBackStack()
                 viewModel.resetState()
