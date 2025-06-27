@@ -19,6 +19,6 @@ object CurrencyDataMapper {
 
     // Fungsi untuk mendapatkan URL bendera dari flagcdn.com
     fun getFlagUrl(countryCode: String): String {
-        return "https://flagcdn.com/w80/${countryCode.lowercase()}.png"
+        return "https://flagcdn.com/w80/${countryCode.lowercase()}.png" // https://flagcdn.com/w80/jp.png
     }
 }

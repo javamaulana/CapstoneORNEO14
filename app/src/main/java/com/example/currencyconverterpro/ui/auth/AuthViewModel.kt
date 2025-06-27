@@ -1,6 +1,6 @@
 package com.example.currencyconverterpro.ui.auth
 
-import android.util.Patterns // <-- Tambahkan import ini
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconverterpro.data.db.User
