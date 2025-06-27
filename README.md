@@ -1,12 +1,12 @@
 # Currency Converter Pro 💰
 
-Aplikasi Android modern yang dirancang sebagai Capstone Project untuk mengkonversi mata uang secara *real-time*. 
-Dibangun sepenuhnya menggunakan Kotlin dan Jetpack Compose dengan arsitektur MVVM, aplikasi ini tidak hanya fungsional 
+Aplikasi Android modern yang dirancang sebagai Capstone Project OR Neo Telemetri untuk mengkonversi mata uang secara *real-time*. 
+Dikembangkan sepenuhnya menggunakan Kotlin dan Jetpack Compose dengan arsitektur MVVM, aplikasi ini tidak hanya fungsional 
 tetapi juga memiliki antarmuka yang menarik dan pengalaman pengguna yang dinamis.
 
 
 ## ✨ Fitur Utama
-Aplikasi ini dilengkapi dengan serangkaian fitur lengkap yang mencakup fungsionalitas inti dan pengalaman pengguna yang kaya:
+Aplikasi ini dilengkapi dengan serangkaian fitur lengkap yang mencakup fungsionalitas inti dan pengalaman pengguna yang baik:
 
 * **Splash Screen**: Memeriksa status sesi pengguna saat aplikasi dimulai. 
 * **Otentikasi Pengguna**:
