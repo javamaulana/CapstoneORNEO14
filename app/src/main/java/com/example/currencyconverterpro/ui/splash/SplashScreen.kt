@@ -42,22 +42,18 @@ fun SplashScreen(navController: NavHostController, viewModel: SplashViewModel) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        // <-- Kita gunakan Column untuk menyusun gambar dan teks secara vertikal
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // <-- Tampilkan gambar dari drawable
             Image(
-                painter = painterResource(id = R.drawable.app_splash), // <-- GANTI app_logo dengan nama file Anda
-                contentDescription = "App Logo", // <-- Deskripsi untuk aksesibilitas
-                modifier = Modifier.size(120.dp) // <-- Atur ukuran gambar sesuai kebutuhan
+                painter = painterResource(id = R.drawable.app_splash),
+                contentDescription = "App Logo",
+                modifier = Modifier.size(120.dp)
             )
 
-            // <-- Beri jarak antara gambar dan teks
             Spacer(modifier = Modifier.height(24.dp))
 
-            // <-- Teks yang sudah ada sebelumnya
             Text(text = "Currency Converter Pro", fontSize = 24.sp, fontWeight = FontWeight.Bold)
         }
     }
