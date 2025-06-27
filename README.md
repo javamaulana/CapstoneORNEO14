@@ -6,7 +6,7 @@ tetapi juga memiliki antarmuka yang menarik dan pengalaman pengguna yang dinamis
 
 
 ## ✨ Fitur Utama
-Aplikasi ini dilengkapi dengan serangkaian fitur lengkap yang mencakup fungsionalitas inti dan pengalaman pengguna yang kaya:
+Aplikasi ini dilengkapi dengan serangkaian fitur lengkap yang mencakup fungsionalitas inti dan pengalaman pengguna yang baik:
 
 * **Splash Screen**: Memeriksa status sesi pengguna saat aplikasi dimulai. 
 * **Otentikasi Pengguna**:
