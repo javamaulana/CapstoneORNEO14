@@ -1,6 +1,5 @@
 package com.example.currencyconverterpro.ui.auth
 
-// <-- Tambahkan import yang dibutuhkan
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -27,13 +26,11 @@ fun RegisterScreen(navController: NavController, viewModel: AuthViewModel) {
 
     val authState by viewModel.authState.collectAsState()
 
-    // <-- 1. Buat SnackbarHostState
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(authState) {
         when (val state = authState) {
             is AuthState.RegistrationSuccess -> {
-                // <-- 2. Ganti Toast dengan Snackbar
                 snackbarHostState.showSnackbar(
                     message = "Registrasi berhasil! Silakan login.",
                     duration = SnackbarDuration.Short
@@ -42,7 +39,6 @@ fun RegisterScreen(navController: NavController, viewModel: AuthViewModel) {
                 viewModel.resetState()
             }
             is AuthState.Error -> {
-                // <-- 2. Ganti Toast dengan Snackbar
                 snackbarHostState.showSnackbar(
                     message = state.message,
                     duration = SnackbarDuration.Short
@@ -53,13 +49,11 @@ fun RegisterScreen(navController: NavController, viewModel: AuthViewModel) {
         }
     }
 
-    // <-- 3. Bungkus layout dengan Scaffold
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { paddingValues ->
         // Form untuk mendaftarkan pengguna baru (misalnya: nama, email, password).
         Column(
-            // <-- 4. Terapkan padding dari Scaffold
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)

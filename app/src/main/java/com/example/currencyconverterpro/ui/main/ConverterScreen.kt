@@ -35,7 +35,6 @@ fun ConverterScreen(
     fromArg: String?,
     toArg: String?
 ) {
-    // State diambil sepenuhnya dari ViewModel untuk memastikan persistensi
     val currencies by viewModel.currencies.collectAsState()
     val conversionResultData by viewModel.conversionResult.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
@@ -46,13 +45,11 @@ fun ConverterScreen(
     val largeNumberFormatter = remember { DecimalFormat("#,##0.0", DecimalFormatSymbols(Locale("in", "ID"))) }
     val smallNumberFormatter = remember { DecimalFormat("#,##0.00000", DecimalFormatSymbols(Locale("in", "ID"))) }
 
-    // Animasi untuk angka hasil konversi
     val animatedAmount by animateFloatAsState(
         targetValue = (conversionResultData?.totalAmount ?: 0.0).toFloat(),
         animationSpec = tween(durationMillis = 800), label = "amountAnimation"
     )
 
-    // Efek ini hanya berjalan saat ada data baru dari halaman favorit
     LaunchedEffect(key1 = fromArg, key2 = toArg) {
         if (fromArg != null && toArg != null) {
             viewModel.updateFromFavorite(fromArg, toArg)
@@ -76,7 +73,6 @@ fun ConverterScreen(
             Text("Konversi Mata Uang", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Kartu untuk input
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     OutlinedTextField(
@@ -98,7 +94,6 @@ fun ConverterScreen(
                 }
             }
 
-            // Tombol Tukar
             Box(modifier = Modifier.padding(vertical = 8.dp)) {
                 FilledIconButton(
                     onClick = { viewModel.onSwapCurrencies() },
@@ -185,7 +180,9 @@ fun ConverterScreen(
 
         Button(
             onClick = { viewModel.convert() },
-            modifier = Modifier.fillMaxWidth().height(50.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(50.dp)
         ) {
             if (isLoading) {
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary)
@@ -222,13 +219,17 @@ fun CurrencyDropdown(
                     AsyncImage(
                         model = CurrencyDataMapper.getFlagUrl(countryCode),
                         contentDescription = "Bendera $selectedCurrency",
-                        modifier = Modifier.size(24.dp).clip(CircleShape),
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                 }
             },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor().fillMaxWidth(),
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
             shape = RoundedCornerShape(12.dp)
         )
         ExposedDropdownMenu(
@@ -245,7 +246,9 @@ fun CurrencyDropdown(
                                 AsyncImage(
                                     model = CurrencyDataMapper.getFlagUrl(countryCode),
                                     contentDescription = "Bendera $name",
-                                    modifier = Modifier.size(24.dp).clip(CircleShape),
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                        .clip(CircleShape),
                                     contentScale = ContentScale.Crop
                                 )
                                 Spacer(modifier = Modifier.width(16.dp))

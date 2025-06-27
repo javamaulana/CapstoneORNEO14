@@ -61,7 +61,6 @@ fun CurrencyDetailScreen(
             TopAppBar(
                 title = {
                     Row(
-                        // PERBAIKAN FINAL: Ganti statusBarsPadding() dengan padding manual
                         modifier = Modifier.padding(top = 18.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -80,14 +79,13 @@ fun CurrencyDetailScreen(
                 },
                 navigationIcon = {
                     IconButton(
-                        // PERBAIKAN FINAL: Ganti statusBarsPadding() dengan padding manual
                         modifier = Modifier.padding(top = 18.dp),
                         onClick = { navController.navigateUp() }
                     ) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Kembali")
                     }
                 },
-                windowInsets = WindowInsets(0.dp), // Ini tetap diperlukan untuk mematikan padding otomatis
+                windowInsets = WindowInsets(0.dp),
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 )

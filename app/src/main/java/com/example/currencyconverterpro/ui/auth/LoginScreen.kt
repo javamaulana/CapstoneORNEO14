@@ -1,6 +1,5 @@
 package com.example.currencyconverterpro.ui.auth
 
-// <-- Tambahkan import yang dibutuhkan untuk Scaffold dan Snackbar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -21,19 +20,16 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
     var password by remember { mutableStateOf("") }
     val authState by viewModel.authState.collectAsState()
 
-    // <-- 1. Buat SnackbarHostState untuk mengontrol Snackbar
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(authState) {
         when (val state = authState) {
             is AuthState.Success -> {
-                // Pengguna diarahkan ke HomeScreen.
                 navController.navigate(Routes.MAIN) {
                     popUpTo(Routes.AUTH) { inclusive = true }
                 }
             }
             is AuthState.Error -> {
-                // <-- 2. Ganti Toast dengan memanggil Snackbar
                 snackbarHostState.showSnackbar(
                     message = state.message,
                     duration = SnackbarDuration.Short
@@ -44,16 +40,14 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
         }
     }
 
-    // <-- 3. Bungkus layout dengan Scaffold
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { paddingValues ->
         Column(
-            // <-- 4. Terapkan padding dari Scaffold
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // Menerapkan padding agar konten tidak tertutup
-                .padding(16.dp),      // Padding asli Anda
+                .padding(paddingValues)
+                .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -73,7 +67,6 @@ fun LoginScreen(navController: NavController, viewModel: AuthViewModel) {
             }
             Spacer(modifier = Modifier.height(8.dp))
             TextButton(onClick = {
-                // Pengguna dapat menekan tombol "Register" untuk diarahkan ke RegisterScreen.
                 navController.navigate(Routes.REGISTER)
             }) {
                 Text("Belum punya akun? Register")

@@ -60,9 +60,7 @@ fun FavoritesScreen(navController: NavController, viewModel: FavoritesViewModel)
         )
     }
 
-    // Pengguna dapat menavigasi ke halaman ini untuk melihat semua item yang telah disimpannya.
     Column(modifier = Modifier.fillMaxSize()) {
-        // --- HEADER VISUAL BARU ---
         Box(
             modifier = Modifier
                 .fillMaxWidth()

@@ -22,7 +22,6 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
             modelClass.isAssignableFrom(AuthViewModel::class.java) -> AuthViewModel(db.userDao(), sessionManager) as T
             modelClass.isAssignableFrom(SplashViewModel::class.java) -> SplashViewModel(sessionManager) as T
             modelClass.isAssignableFrom(ConverterViewModel::class.java) -> ConverterViewModel(db.favoriteDao(), sessionManager) as T
-            // --- PERBAIKAN: Constructor FavoritesViewModel disederhanakan ---
             modelClass.isAssignableFrom(FavoritesViewModel::class.java) -> FavoritesViewModel(db.favoriteDao(), sessionManager) as T
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> ProfileViewModel(db.userDao(), sessionManager) as T
             modelClass.isAssignableFrom(CurrencyDetailViewModel::class.java) -> CurrencyDetailViewModel() as T

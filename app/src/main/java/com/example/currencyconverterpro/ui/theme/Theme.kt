@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// Palet warna default, sesuaikan jika perlu
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFD0BCFF),
     secondary = Color(0xFFCCC2DC),
@@ -28,7 +27,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun CurrencyConverterProTheme( // Pastikan nama fungsi ini sama dengan yang Anda gunakan
+fun CurrencyConverterProTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -39,23 +38,20 @@ fun CurrencyConverterProTheme( // Pastikan nama fungsi ini sama dengan yang Anda
         SideEffect {
             val window = (view.context as Activity).window
 
-            // ================== PERBAIKAN KRUSIAL ADA DI SINI ==================
-            // Mengatur warna status bar menjadi transparan (benar: .toArgb())
-            window.statusBarColor = Color.Transparent.toArgb()
-            // ===================================================================
 
-            // Memberitahu sistem agar layout aplikasi digambar di belakang status bar
+            window.statusBarColor = Color.Transparent.toArgb()
+
+
             WindowCompat.setDecorFitsSystemWindows(window, false)
 
-            // Mengatur agar ikon di status bar (jam, baterai) terlihat
-            // (menjadi gelap di tema terang, dan terang di tema gelap)
+
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography, // Pastikan Anda punya file Typography.kt
+        typography = Typography,
         content = content
     )
 }

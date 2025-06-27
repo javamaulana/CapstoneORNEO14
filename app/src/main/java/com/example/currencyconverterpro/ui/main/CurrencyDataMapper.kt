@@ -1,7 +1,7 @@
 package com.example.currencyconverterpro.ui.main
 
 object CurrencyDataMapper {
-    // Peta dari kode mata uang ke kode negara (dua huruf, huruf kecil)
+    // Peta dari kode mata uang ke kode negara
     private val currencyToCountryCodeMap = mapOf(
         "AUD" to "au", "BGN" to "bg", "BRL" to "br", "CAD" to "ca",
         "CHF" to "ch", "CNY" to "cn", "CZK" to "cz", "DKK" to "dk",

@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols // <-- PASTIKAN IMPORT INI ADA
+import java.text.DecimalFormatSymbols
 import java.util.*
 
 class NumberFormattingVisualTransformation : VisualTransformation {

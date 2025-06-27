@@ -1,6 +1,5 @@
 package com.example.currencyconverterpro.ui.splash
 
-// <-- Tambahkan import yang dibutuhkan
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.currencyconverterpro.R // <-- Pastikan import R sudah ada
+import com.example.currencyconverterpro.R
 import com.example.currencyconverterpro.ui.navigation.Routes
 import kotlinx.coroutines.delay
 

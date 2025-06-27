@@ -39,19 +39,16 @@ class AuthViewModel(
             val trimmedEmail = email.trim().lowercase()
             val trimmedPassword = password.trim()
 
-            // Validasi tidak boleh kosong
             if (trimmedName.isBlank() || trimmedEmail.isBlank() || trimmedPassword.isBlank() || gender.isBlank()) {
                 _authState.value = AuthState.Error("Semua bagian harus diisi.")
                 return@launch
             }
 
-            // --- PERBAIKAN: Menambahkan validasi format email ---
             if (!Patterns.EMAIL_ADDRESS.matcher(trimmedEmail).matches()) {
                 _authState.value = AuthState.Error("Format email yang Anda masukkan tidak valid.")
                 return@launch
             }
 
-            // Validasi email sudah terdaftar atau belum
             if (userDao.getUserByEmail(trimmedEmail) != null) {
                 _authState.value = AuthState.Error("Email sudah terdaftar.")
                 return@launch

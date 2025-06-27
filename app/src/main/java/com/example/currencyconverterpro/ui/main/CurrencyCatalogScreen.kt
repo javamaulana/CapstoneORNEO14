@@ -34,7 +34,6 @@ fun CurrencyCatalogScreen(navController: NavController, viewModel: ConverterView
                     },
                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                 ) {
-                    // --- PERUBAHAN: Menambahkan bendera di samping nama mata uang ---
                     Row(
                         modifier = Modifier.padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically

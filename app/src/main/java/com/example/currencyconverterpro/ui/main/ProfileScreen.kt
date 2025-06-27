@@ -44,20 +44,18 @@ fun ProfileScreen(mainNavController: NavController, viewModel: ProfileViewModel)
         ) {
             Spacer(modifier = Modifier.height(32.dp))
 
-            // --- PERBAIKAN: Menggunakan gambar drawable kustom sesuai jenis kelamin ---
-            // Pastikan Anda sudah memiliki ic_avatar_male.png/xml dan ic_avatar_female.png/xml di res/drawable
             val avatarImage = painterResource(
                 id = when (user?.gender) {
                     "Laki-laki" -> R.drawable.ic_avatar_male
                     "Perempuan" -> R.drawable.ic_avatar_female
-                    else -> R.drawable.ic_avatar_male // Gambar default jika terjadi kesalahan
+                    else -> R.drawable.ic_avatar_male
                 }
             )
 
             Image(
                 painter = avatarImage,
                 contentDescription = "Avatar Profil",
-                contentScale = ContentScale.Crop, // Pastikan gambar mengisi frame
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)

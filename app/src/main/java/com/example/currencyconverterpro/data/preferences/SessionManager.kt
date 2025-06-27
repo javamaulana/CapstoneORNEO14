@@ -30,8 +30,6 @@ class SessionManager(context: Context) {
         }
     }
 
-    // --- PERBAIKAN: Menyederhanakan fungsi logout ---
-    // Kita hanya menghapus data sesi (login & user id), bukan data preferensi mata uang
     suspend fun clearSession() {
         dataStore.edit { preferences ->
             preferences.remove(IS_LOGGED_IN)

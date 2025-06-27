@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 
 /**
  * Objek singleton untuk menangani event yang bersifat global, seperti menampilkan Snackbar.
- * Bisa diakses dari ViewModel mana pun.
  */
 object AppEventManager {
     private val _snackbarMessages = MutableSharedFlow<String>()
